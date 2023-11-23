@@ -226,7 +226,7 @@ void config()
     Serial.print(";");
     Serial.print("Accel Y (g)");
     Serial.print(";");
-    Serial.print("Accel Z (g)");
+    Serial.println("Accel Z (g)");
   }
   else if (input == '2')
   {
