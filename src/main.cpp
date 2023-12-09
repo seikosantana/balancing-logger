@@ -11,6 +11,8 @@
 #include <memory>
 #include "sensor_modes.hpp"
 
+#define PROX_PIN 12
+
 std::shared_ptr<Adafruit_MPU6050> mpu;
 std::shared_ptr<MMA8452Q> mma;
 
@@ -226,7 +228,9 @@ void config()
     Serial.print(";");
     Serial.print("Accel Y (g)");
     Serial.print(";");
-    Serial.println("Accel Z (g)");
+    Serial.print("Accel Z (g)");
+    Serial.print(";");
+    Serial.println("Prox");
   }
   else if (input == '2')
   {
@@ -247,7 +251,9 @@ void config()
     Serial.print(";");
     Serial.print("Gyro Z (rad/s)");
     Serial.print(";");
-    Serial.println("Temperature (degC)");
+    Serial.print("Temperature (degC)");
+    Serial.print(";");
+    Serial.println("Prox");
   }
 }
 
@@ -260,6 +266,8 @@ void setup(void)
   Serial.flush();
   Serial.println();
 
+  pinMode(PROX_PIN, INPUT);
+
   config();
 
   delay(100);
@@ -267,6 +275,7 @@ void setup(void)
 
 void loop()
 {
+  int proxStatus = digitalRead(PROX_PIN);
   if (sensorMode == SensorMode::MMA)
   {
     if (mma->available())
@@ -285,6 +294,8 @@ void loop()
       Serial.print(mma->getCalculatedY(), 7);
       Serial.print(";");
       Serial.print(mma->getCalculatedZ(), 7);
+      Serial.print(";");
+      Serial.print(proxStatus);
       Serial.println();
     }
   }
@@ -311,6 +322,9 @@ void loop()
     Serial.print(g.gyro.z);
 
     Serial.print(";");
-    Serial.println(temp.temperature);
+    Serial.print(temp.temperature);
+    Serial.print(";");
+    Serial.print(proxStatus);
+    Serial.println();
   }
 }
