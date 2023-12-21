@@ -38,7 +38,7 @@ void userMpuConfig(void)
     }
   }
 
-  sensorMode = SensorMode::MPU;
+  sensorMode = SensorMode::MPU6050;
 
   char input;
 
@@ -186,7 +186,7 @@ void userMMAConfig()
     delay(3000);
   }
 
-  sensorMode = SensorMode::MMA;
+  sensorMode = SensorMode::MMA845X;
 
   char input;
 
@@ -276,7 +276,7 @@ void setup(void)
 void loop()
 {
   int proxStatus = digitalRead(PROX_PIN);
-  if (sensorMode == SensorMode::MMA)
+  if (sensorMode == SensorMode::MMA845X)
   {
     if (mma->available())
     { // Wait for new data from accelerometer
@@ -299,7 +299,7 @@ void loop()
       Serial.println();
     }
   }
-  else if (sensorMode == SensorMode::MPU)
+  else if (sensorMode == SensorMode::MPU6050)
   {
     /* Get new sensor events with the readings */
     sensors_event_t a, g, temp;

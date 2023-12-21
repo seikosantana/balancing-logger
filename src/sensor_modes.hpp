@@ -3,8 +3,9 @@
 
 typedef enum SensorMode
 {
-    MMA,
-    MPU
+    MMA845X,
+    MPU6050,
+    ADXL345
 };
 
 #endif
